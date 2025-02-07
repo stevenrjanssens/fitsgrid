@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 
 
-app = App()
+app = App(help="Create 3x3 cutout grids to evaluate image quality.")
 
 cutout_size = (500, 500) # (width, height) in pixels
 
@@ -14,6 +14,14 @@ symlognorm = colors.SymLogNorm(linthresh=10, linscale=1, vmin=-50, vmax=1<<16)
 
 
 def gridimage(path: str):
+    """
+    Create 3x3 grid cutout image for FITS file specified by path.
+
+    Parameters
+    ----------
+    path : str
+        Path to FITS image.
+    """
     data = fits.getdata(path)
     img_height, img_width = data.shape
 
@@ -44,6 +52,14 @@ def gridimage(path: str):
 
 @app.default
 def main(*paths: str):
+    """
+    Creates a 3x3 cutout grid for each FITS file in paths list.
+
+    Parameters
+    ----------
+    paths : str
+        List of FITS files to create cutout grids for.
+    """
     for path in paths:
         gridimage(path)
 
